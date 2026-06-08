@@ -75,15 +75,20 @@ fun getHintLabel(popupSet: PopupSet<*>?, params: KeyboardParams, label: String):
 fun getHintIcon(popupSet: PopupSet<*>?, params: KeyboardParams, label: String): String? =
     KeySpecParser.getIconName(getHintText(popupSet, params, label))
 
+private fun firstUsableHint(values: List<String>?): String? =
+    values?.firstOrNull { value ->
+        value.isNotEmpty() && !(value.startsWith("!") && value.count { it == '!' } >= 2)
+    }
+
 private fun getHintText(popupSet: PopupSet<*>?, params: KeyboardParams, label: String): String? {
     var hintLabel: String? = null
     for (type in params.mPopupKeyHintOrder) {
         when (type) {
             POPUP_KEYS_NUMBER -> popupSet?.numberLabel?.let { hintLabel = it }
-            POPUP_KEYS_LAYOUT -> popupSet?.getPopupKeyLabels(params)?.let { hintLabel = it.firstOrNull() }
+            POPUP_KEYS_LAYOUT -> hintLabel = firstUsableHint(popupSet?.getPopupKeyLabels(params))
             POPUP_KEYS_SYMBOLS -> popupSet?.symbol?.let { hintLabel = it }
-            POPUP_KEYS_LANGUAGE -> params.mLocaleKeyboardInfos.getPopupKeys(label)?.let { hintLabel = it.firstOrNull() }
-            POPUP_KEYS_LANGUAGE_PRIORITY -> params.mLocaleKeyboardInfos.getPriorityPopupKeys(label)?.let { hintLabel = it.firstOrNull() }
+            POPUP_KEYS_LANGUAGE -> hintLabel = firstUsableHint(params.mLocaleKeyboardInfos.getPopupKeys(label))
+            POPUP_KEYS_LANGUAGE_PRIORITY -> hintLabel = firstUsableHint(params.mLocaleKeyboardInfos.getPriorityPopupKeys(label))
         }
         if (hintLabel != null) return hintLabel
     }
