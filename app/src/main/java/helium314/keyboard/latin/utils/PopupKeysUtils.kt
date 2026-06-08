@@ -75,7 +75,7 @@ fun getHintLabel(popupSet: PopupSet<*>?, params: KeyboardParams, label: String):
 fun getHintIcon(popupSet: PopupSet<*>?, params: KeyboardParams, label: String): String? =
     KeySpecParser.getIconName(getHintText(popupSet, params, label))
 
-private fun firstUsableHint(values: List<String>?): String? =
+private fun firstUsableHint(values: Collection<String>?): String? =
     values?.firstOrNull { value ->
         value.isNotEmpty() && !(value.startsWith("!") && value.count { it == '!' } >= 2)
     }
