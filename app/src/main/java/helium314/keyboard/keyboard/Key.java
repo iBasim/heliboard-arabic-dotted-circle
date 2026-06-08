@@ -1092,21 +1092,10 @@ public class Key implements Comparable<Key> {
         ) {
             mKeyboardParams = params;
             mBackgroundType = backgroundType;
-            int finalLabelFlags = labelFlags;
-
-boolean isArabicPeriodKey = "period".equals(keySpec) || code == '.';
-
-if (params.mId.mMode == KeyboardId.MODE_TEXT
-        && params.mId.isAlphabetKeyboard()
-        && "ar".equals(params.mId.getLocale().getLanguage())
-        && isArabicPeriodKey) {
-    finalLabelFlags |= LABEL_FLAGS_HAS_POPUP_HINT;
-}
-
-mLabelFlags = finalLabelFlags;
+            mLabelFlags = labelFlags;
             mWidth = width;
             mHeight = params.mDefaultRowHeight;
-            mIconName = KeySpecParser.getIconName(keySpec);
+            mIconName = KeySpecParser.getIconName(keySpec) ;
 
             final boolean needsToUpcase = needsToUpcase(mLabelFlags, params.mId.mElementId);
             final Locale localeForUpcasing = params.mId.getLocale();
