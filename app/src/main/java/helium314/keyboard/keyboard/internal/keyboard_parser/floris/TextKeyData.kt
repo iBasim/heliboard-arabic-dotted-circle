@@ -353,6 +353,13 @@ sealed interface KeyData : AbstractKeyData {
             newLabel = KeyLabel.keyLabelToActualLabel(label, params)
         }
         var newLabelFlags = labelFlags or additionalLabelFlags or getAdditionalLabelFlags(params)
+
+if (label == KeyLabel.PERIOD &&
+    params.mId.isAlphabetKeyboard &&
+    params.mId.locale.language == "ar"
+) {
+    newLabelFlags = newLabelFlags or Key.LABEL_FLAGS_HAS_POPUP_HINT
+}
         val newPopupKeys = popup.merge(getAdditionalPopupKeys(params))
 
         val background = when (type) {
