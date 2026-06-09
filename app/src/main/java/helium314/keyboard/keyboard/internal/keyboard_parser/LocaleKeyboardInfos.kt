@@ -39,12 +39,11 @@ class LocaleKeyboardInfos(dataStream: InputStream?, locale: Locale) {
         else -> false
     }
     val labelFlags = when (locale.language) { // todo: move to the info file
-    "hy", "be", "fa", "hi", "lo", "mr", "ne", "th", "ur" -> Key.LABEL_FLAGS_FONT_NORMAL
-    "ar" -> Key.LABEL_FLAGS_FONT_NORMAL or Key.LABEL_FLAGS_HAS_POPUP_HINT
-    "km", "ml", "si", "ta", "te" -> Key.LABEL_FLAGS_FONT_NORMAL or Key.LABEL_FLAGS_AUTO_X_SCALE
-    "kn" -> Key.LABEL_FLAGS_FONT_NORMAL or Key.LABEL_FLAGS_AUTO_X_SCALE or Key.LABEL_FLAGS_FOLLOW_KEY_LETTER_RATIO
-    "mns" -> Key.LABEL_FLAGS_FOLLOW_KEY_LETTER_RATIO
-    else -> 0
+        "hy", "ar", "be", "fa", "hi", "lo", "mr", "ne", "th", "ur" -> Key.LABEL_FLAGS_FONT_NORMAL
+        "km", "ml", "si", "ta", "te" -> Key.LABEL_FLAGS_FONT_NORMAL or Key.LABEL_FLAGS_AUTO_X_SCALE
+        "kn" -> Key.LABEL_FLAGS_FONT_NORMAL or Key.LABEL_FLAGS_AUTO_X_SCALE or Key.LABEL_FLAGS_FOLLOW_KEY_LETTER_RATIO
+        "mns" -> Key.LABEL_FLAGS_FOLLOW_KEY_LETTER_RATIO
+        else -> 0
     }
     val tlds = mutableListOf(Key.POPUP_KEYS_HAS_LABELS)
 
