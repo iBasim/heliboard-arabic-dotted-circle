@@ -1092,7 +1092,7 @@ public class Key implements Comparable<Key> {
         ) {
             mKeyboardParams = params;
             mBackgroundType = backgroundType;
-            mLabelFlags = labelFlags;
+            int computedLabelFlags = labelFlags;
             mWidth = width;
             mHeight = params.mDefaultRowHeight;
             mIconName = KeySpecParser.getIconName(keySpec) ;
@@ -1134,7 +1134,7 @@ public class Key implements Comparable<Key> {
             }
 
             // hint label
-            if ((mLabelFlags & LABEL_FLAGS_DISABLE_HINT_LABEL) != 0) {
+            if ((computedLabelFlags & LABEL_FLAGS_DISABLE_HINT_LABEL) != 0) {
                 mHintLabel = null;
                 mHintIconName = null;
             } else {
@@ -1145,7 +1145,14 @@ public class Key implements Comparable<Key> {
                         : hintLabel;
                 mHintIconName = mHintLabel != null ? null : PopupKeysUtilsKt.getHintIcon(popupSet, params, keySpec);
             }
-
+            if (params.mId.isAlphabetKeyboard()
+            && "ar".equals(params.mId.getLocale().getLanguage())
+            && code == Constants.CODE_PERIOD
+            && !TextUtils.isEmpty(mHintLabel)) {
+            computedLabelFlags |= LABEL_FLAGS_HAS_POPUP_HINT;
+            }
+            mLabelFlags = computedLabelFlags;
+            
             String outputText = KeySpecParser.getOutputText(keySpec, code);
             if (needsToUpcase) {
                 outputText = StringUtils.toTitleCaseOfKeyLabel(outputText, localeForUpcasing);
