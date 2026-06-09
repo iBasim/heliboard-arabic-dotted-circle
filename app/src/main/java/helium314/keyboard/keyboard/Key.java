@@ -1097,7 +1097,7 @@ public class Key implements Comparable<Key> {
             mHeight = params.mDefaultRowHeight;
             mIconName = KeySpecParser.getIconName(keySpec) ;
 
-            final boolean needsToUpcase = needsToUpcase(mLabelFlags, params.mId.mElementId);
+            final boolean needsToUpcase = needsToUpcase(computedLabelFlags, params.mId.mElementId);
             final Locale localeForUpcasing = params.mId.getLocale();
             int actionFlags = 0;
             if (params.mId.isNumberLayout())
